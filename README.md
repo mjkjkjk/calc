@@ -5,6 +5,8 @@ A command-line calculator built with Flex and Bison, with the objective of learn
 ## Features
 - Basic arithmetic (+, -, *, /)
 - Power operator (**)
+- Functions like sin, cos
+- Variable assignment
 - Parentheses
 - Negative numbers
 - Error handling
