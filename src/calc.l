@@ -7,7 +7,7 @@
 %}
 
 %%
-[0-9]+    { yylval.num = atoi(yytext); return NUMBER; }
+[0-9]+(\.[0-9]+)?    { yylval.num = atof(yytext); return NUMBER; }
 "+"       { return PLUS; }
 "-"       { return MINUS; }
 "**"      { return POWER; }
@@ -18,6 +18,11 @@
 ")"       { return RPAREN; }
 \n        { return NEWLINE; }
 [ \t]     ; /* skip whitespace */
+"sin"     { return SIN; }
+"cos"     { return COS; }
+"sqrt"    { return SQRT; }
+"log"     { return LOG; }
+"abs"     { return ABS; }
 [a-zA-Z][a-zA-Z0-9]*   { 
     strncpy(yylval.id, yytext, sizeof(yylval.id) - 1);
     yylval.id[sizeof(yylval.id) - 1] = '\0';
