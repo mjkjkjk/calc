@@ -1,0 +1,2 @@
+# Basic variable assignment and usage
+x = 5 # 5

@@ -28,12 +28,20 @@ run_test_file() {
         # check if line contains expected result
         if [[ $line =~ = ]]; then
             # split input and expected result
-            input=$(echo "$line" | cut -d'=' -f1 | xargs)
-            expected=$(echo "$line" | cut -d'=' -f2 | xargs)
+            input=$(echo "$line" | cut -d'#' -f1 | xargs)
+            expected=$(echo "$line" | cut -d'#' -f2 | xargs)
             
             echo -n "Testing: $line -> "
             result=$(echo "$input" | $CALC 2>&1)
             actual=$(echo "$result" | grep "Result:" | cut -d':' -f2 | xargs)
+            
+            # Remove '>' prefix from expected if present
+            expected=$(echo "$expected" | sed 's/^> *//')
+            
+            # Handle empty actual value (when Result: line is not found)
+            if [ -z "$actual" ]; then
+                actual=$(echo "$result" | tail -n1 | xargs)
+            fi
             
             if [ "$actual" = "$expected" ]; then
                 echo -e "${GREEN}PASS${NC}"

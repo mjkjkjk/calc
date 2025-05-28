@@ -1,5 +1,5 @@
-CC = gcc
-CFLAGS = -Wall
+CC = cc
+CFLAGS = -Wall -I$(SRC_DIR)
 SRC_DIR = src
 BUILD_DIR = build
 TEST_DIR = test
@@ -11,6 +11,7 @@ EXECUTABLE = $(BUILD_DIR)/calc
 
 GRAMMAR = $(SRC_DIR)/calc.y
 LEXER_SRC = $(SRC_DIR)/calc.l
+HEADER = $(SRC_DIR)/calc.h
 
 .PHONY: all clean test
 
@@ -23,7 +24,7 @@ $(PARSER) $(PARSER_H): $(GRAMMAR)
 	@mkdir -p $(BUILD_DIR)
 	bison -d -o $(PARSER) $<
 
-$(LEXER): $(LEXER_SRC) $(PARSER_H)
+$(LEXER): $(LEXER_SRC) $(HEADER) $(PARSER_H)
 	@mkdir -p $(BUILD_DIR)
 	flex -o $@ $<
 
